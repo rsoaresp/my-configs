@@ -1,7 +1,6 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
---vim.g.python_host_prog = 'home/carrefour/.local/venv/nvim/bin/python'
 vim.opt.number = true
 
 local Plug = vim.fn['plug#']
