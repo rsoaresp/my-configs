@@ -1,11 +1,13 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+--vim.g.python_host_prog = 'home/carrefour/.local/venv/nvim/bin/python'
 vim.opt.number = true
 
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
+	Plug 'nvim-treesitter/nvim-treesitter'
 	Plug 'tpope/vim-sensible'
 	Plug 'nvim-tree/nvim-web-devicons'
 	Plug 'nvim-tree/nvim-tree.lua'
@@ -23,6 +25,20 @@ vim.call('plug#begin')
 	Plug('iamcco/markdown-preview.nvim', { ['do'] = 'cd app && npx --yes yarn install' })
 vim.call('plug#end')
 
+
+local lspconfig = require('lspconfig')
+lspconfig.gopls.setup{} -- Basic setup for gopls
+
+require('go').setup()
+
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').gofmt()
+  end,
+  group = format_sync_grp,
+})
 
 require('kanagawa').setup({
     transparent = true,   
