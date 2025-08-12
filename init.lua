@@ -4,6 +4,26 @@ vim.g.loaded_netrwPlugin = 1
 --vim.g.python_host_prog = 'home/carrefour/.local/venv/nvim/bin/python'
 vim.opt.number = true
 
+vim.opt.modifiable = true
+
+
+-- Run ruff on every save
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.py",
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.fn.executable("ruff") == 1 then
+      vim.cmd("silent !ruff check --select I --fix " .. vim.api.nvim_buf_get_name(buf))
+      vim.cmd("silent !ruff format " .. vim.api.nvim_buf_get_name(buf))
+      vim.cmd("edit!")
+    else
+      vim.notify("ruff not installed!", vim.log.levels.WARN)
+    end
+  end,
+})
+	
+
+
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
