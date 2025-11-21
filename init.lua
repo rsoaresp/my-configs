@@ -102,16 +102,16 @@ require'nvim-treesitter.configs'.setup {
 
 
 
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+require('go').setup()
+
+local format_sync_grp = vim.api.nvim_create_augroup("goimports", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
-   require('go.format').gofmt()
+   require('go.format').goimports()
   end,
   group = format_sync_grp,
 })
-
-
 
 
 require("nvim-tree").setup({
@@ -218,11 +218,10 @@ vim.lsp.enable('pyright', {
 
 vim.lsp.enable('bashls', {})
 
+-- go install golang.org/x/tools/gopls@latest
 vim.lsp.enable('gopls', {})
 
-
-require('go').setup()
-
+require("go.format").goimports() 
 
 vim.lsp.enable('terraformls', {
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
