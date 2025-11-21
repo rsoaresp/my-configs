@@ -33,7 +33,7 @@ These are my basic configurations for kitty and neovim.
 5. Install pyright
    ```bash
    sudo apt-get update -y && sudo apt-get install -y nodejs npm # if you do not have already node installed
-   npm -i -g pyright
+   npm i -g pyright
    ```
    
 6. Install gopls
